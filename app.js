@@ -1,6 +1,7 @@
-'use strict';
-let info = ['Flight From', 'Flight To', 'Capacity', 'Reserved Seats', 'Ticket'];
-function Flight(flightFrom, flightTo, capacity, reservedSeats){
+
+let info = ['Flight From', ' Flight To', ' Capacity', ' Reserved Seats', 'Availabe Seats', 'Ticket'];
+
+function Flights(flightFrom, flightTo, capacity, reservedSeats){
     this.flightFrom = flightFrom;
     this.flightTo = flightTo;
     this.capacity = capacity;
@@ -8,63 +9,72 @@ function Flight(flightFrom, flightTo, capacity, reservedSeats){
     this.availabeSeats = 0;
     this.tickets = [];
 }
-Flight.prototype.setAvailableSeats = function(){
-    this.availabeSeats = this.capacity - this.reservedSeats;
+Flights.prototype.setAvailableSeats = function(){
+    this.availabeSeats = this.capacity-this.reservedSeats;
+    console.log(this.availabeSeats);
 }
-Flight.prototype.setTickets = function(){
-    for(let i = 0; i<this.reservedSeats; i++){
-        this.tickets.push([i]);
+Flights.prototype.setTickets = function(){
+    for(let k=1; k<=this.reservedSeats; k++){
+        this.tickets.push([k]);
     }
 }
-let firstFlight = new Flight('USA', 'UK', 435, 43);
-firstFlight.setAvailableSeats();
-firstFlight.setTickets();
-console.log(firstFlight);
-
-var flights = document.getElementById('form');
-flights.addEventListener('submit',addingFlights);
-function addingFlights(event){
+let allFlights = document.getElementById('form');
+allFlights.addEventListener('submit',addingFlight);
+function addingFlight(event){
     event.preventDefault();
     console.log(event);
     let from = event.target.flightfrom.value;
     let to = event.target.flightto.value;
     let capacity = event.target.capacity.value;
-    let reserved = event.target.reservedseats.value;
-    let allFlights = new Flight(from, to, capacity, reserved);
-    allFlights.setAvailableSeats();
-    allFlights.setTickets();
-    allFlights.render();
-    console.log(allFlights);
+    let reservedseats = event.target.reservedseats.value;
+    console.log(from, to, capacity, reservedseats);
+    let flights = new Flights(from,to,capacity,reservedseats);
+    flights.setAvailableSeats();
+    flights.setTickets();
+    flights.showTable();
+    console.log(flights);
 }
-Flight.prototype.render= function(){
-let table = document.getElementById('flightTable');
+
+
+let tableEl = document.getElementById('table');
+
+
+function render(){
 let trEl = document.createElement('tr');
-table.appendChild(trEl);
-for(let k = 0; k<info.length; k++){
-let thEl = document.createElement('th');
-trEl.appendChild(thEl);
-thEl.innerHTML = `${info[k]}`;
+tableEl.appendChild(trEl);
+// let tdEl1 = document.createElement('td')
+// trEl.appendChild(tdEl1);
+// tdEl1.innerHTML = ``;
+for(let k=0; k<info.length; k++){
+    let tdEl = document.createElement('td');
+    trEl.appendChild(tdEl);
+    tdEl.innerHTML = `${info[k]}`;
 }
+}
+render();
+
+
+Flights.prototype.showTable = function(){
 let trEl2 = document.createElement('tr');
-table.appendChild(trEl2);
-let tdEl1 = document.createElement('td');
-trEl2.appendChild(tdEl1);
-tdEl1.innerHTML = `${this.flightFrom}`;
+tableEl.appendChild(trEl2);
 let tdEl2 = document.createElement('td');
 trEl2.appendChild(tdEl2);
-tdEl2.innerHTML = `${this.flightTo}`;
+tdEl2.innerHTML= `${this.flightFrom}`;
 let tdEl3 = document.createElement('td');
 trEl2.appendChild(tdEl3);
-tdEl3.innerHTML = `${this.capacity}`;
+tdEl3.innerHTML= `${this.flightTo}`;
 let tdEl4 = document.createElement('td');
 trEl2.appendChild(tdEl4);
-tdEl4.innerHTML = `${this.reservedSeats}`;
+tdEl4.innerHTML= `${this.capacity}`;
 let tdEl5 = document.createElement('td');
 trEl2.appendChild(tdEl5);
-tdEl5.innerHTML = `${this.availabeSeats}`;
+tdEl5.innerHTML= `${this.reservedSeats}`;
 let tdEl6 = document.createElement('td');
 trEl2.appendChild(tdEl6);
-tdEl6.innerHTML = `${this.tickets}`;
+tdEl6.innerHTML= `${this.availabeSeats}`;
+let tdEl7 = document.createElement('td');
+trEl2.appendChild(tdEl7);
+tdEl7.innerHTML= `${this.tickets}`;
 }
 
 
