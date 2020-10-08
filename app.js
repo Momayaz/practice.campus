@@ -1,105 +1,95 @@
 'use strict';
 
-//declare form
-var data = ['Flight From', 'Flight Destination', 'Capacity', 'reserve', 'lefted Seats'];
-var formEl = document.getElementById('form');
- var allData = [];
-function Flight(from,to,capacity,reserve){
-    this.from = from;
-    this.to = to;
-    this.capacity = capacity;
-    this.reserve = reserve;
-    this.availableSeats = 0;
-    this.totalCapacity = 0;
-    allData.push(this);
-    
-    
-    
-}
-Flight.prototype.getavailableSeats = function(){
-    this.availableSeats =(this.capacity - this.reserve);
-}
-// Event lisnter
-formEl.addEventListener('submit',click);
-function click(event){
-    event.preventDefault();
-    var from=event.target.from.value;
-    var to = event.target.to.value;
-    var capacity = event.target.capacity.value;
-    var reserve = event.target.reserve.value;
-    console.log(from,to,capacity,reserve);
-     var allFlights = new Flight(from,to,capacity,reserve);
-     allFlights.getavailableSeats();
-     allFlights.render();
-     localStorage.setItem('flight', JSON.stringify(allData));
-    //  allFlights.total();
-    //  allFlights.showTotal();
-
-    
-}
-// total();
-//create table
 var tableEl = document.getElementById('table');
-var trEl = document.createElement('tr');
-tableEl.appendChild(trEl);
-for(var i = 0; i<data.length; i++){
-    var thEl = document.createElement('th');
-    trEl.appendChild(thEl);
-    thEl.textContent = `${data[i]}`;
+var header = ['First Destination', 'Second Destination', 'Capacity', 'Reserved Seats', 'Lifted Seats', 'Tickets'];
+var allFlightData = [];
+function Flight(flightFrom, flightInto, capacity, reservedSeats){
+    this.flightFrom = flightFrom;
+    this.flightInto = flightInto;
+    this.capacity = capacity;
+    this.reservedSeats = reservedSeats;
+    this.availableSeats = 0;
+    this.tickets = [];
+    allFlightData.push(this);
 }
-// let table accesses to constructor function.
-Flight.prototype.render = function(){
-    var trEl2 = document.createElement('tr');
-    tableEl.appendChild(trEl2);
-    var tdEl = document.createElement('td');
-    trEl2.appendChild(tdEl);
-    tdEl.innerHTML = `${this.from}`;
-    var tdEl2 = document.createElement('td');
-    trEl2.appendChild(tdEl2);
-    tdEl2.innerHTML = `${this.to}`;
-    var tdEl3 = document.createElement('td');
-    trEl2.appendChild(tdEl3);
-    tdEl3.innerHTML = `${this.capacity}`;
-    var tdEl4 = document.createElement('td');
-    trEl2.appendChild(tdEl4);
-    tdEl4.innerHTML = `${this.reserve}`;
-    var tdEl4 = document.createElement('td');
-    trEl2.appendChild(tdEl4);
+
+    var formEl = document.getElementById('form');
+    formEl.addEventListener('submit', addInfo);
+    function addInfo(event){
+        event.preventDefault();
+        var from = event.target.flightFrom.value;
+        var to = event.target.flightInto.value;
+        var capacity = event.target.capacity.value;
+        var reserved = event.target.reservedSeats.value;
+        var allFlights = new Flight(from, to, capacity, reserved);
+        allFlights.getAvailableSeats();
+        console.log(allFlights.availableSeats);
+        allFlights.ticketsNumber();
+        allFlights.renderRow();
+        localStorage.setItem('flightData', JSON.stringify(allFlightData));
+    }
+
+
+ function renderHeader(){
+    let trEl = document.createElement('tr');
+    tableEl.appendChild(trEl);
+    for(let i=0; i<header.length; i++){
+        let thEl = document.createElement('th');
+        trEl.appendChild(thEl);
+        thEl.innerHTML = `${header[i]}`;
+    }
+
+}
+renderHeader();
+
+
+Flight.prototype.renderRow = function(){
+    let trEl1 = document.createElement('tr');
+    tableEl.appendChild(trEl1);
+    let tdEl = document.createElement('td');
+    trEl1.appendChild(tdEl);
+    tdEl.innerHTML = `${this.flightFrom}`;
+    let tdEl1 = document.createElement('td');
+    trEl1.appendChild(tdEl1);
+    tdEl1.innerHTML = `${this.flightInto}`;
+    let tdEl2 = document.createElement('td');
+    trEl1.appendChild(tdEl2);
+    tdEl2.innerHTML = `${this.capacity}`;
+    let tdEl3 = document.createElement('td');
+    trEl1.appendChild(tdEl3);
+    tdEl3.innerHTML = `${this.reservedSeats}`;
+    let tdEl4 = document.createElement('td');
+    trEl1.appendChild(tdEl4);
     tdEl4.innerHTML = `${this.availableSeats}`;
-}
-if(localStorage.getItem('flight')){
-var flightData=JSON.parse(localStorage.getItem('flight'));
-for(var i=0; i<flightData.length; i++){
-    new Flight(flightData[i].from, flightData[i].to, flightData[i].capacity, flightData[i].reserve);
-}
-}
-// function total(){
-//     var totalCapacity =0; 
-//     for(var i =0 ; i < allData.length ; i++)
-//     {
-//         totalCapacity+=Number(allData[i].capacity);
-//     }
-      
-// }
-// Flight.prototype.total = function(){
-//     for(var e=0; e<allData.length; e++){
-//         this.totalCapacity+= Number(this.capacity);
-//     }
-// }
-// Flight.prototype.showTotal = function(){
-// var totalEl = document.getElementById('total');
-// totalEl.textContent = `the total capacity is ${this.totalCapacity}`;
+    let tdEl5 = document.createElement('td');
+    trEl1.appendChild(tdEl5);
+    tdEl5.innerHTML = `${this.tickets}`;
+    
 
-// }
+}
 
-for(var t=0; t<allData.length; t++){
-    allData[t].getavailableSeats();
-    allData[t].render();
+Flight.prototype.getAvailableSeats = function(){
+    this.availableSeats = this.capacity - this.reservedSeats;
+}
+
+Flight.prototype.ticketsNumber = function(){
+    for(let r=0; r<this.reservedSeats; r++){
+    this.tickets.push(r);
 }
 
 
-
-
+}
+if(localStorage.getItem('flightData')){
+let getData = JSON.parse(localStorage.getItem('flightData'));
+for(let f=0; f<getData.length; f++){
+    new Flight(getData[f].flightFrom, getData[f].flightInto, getData[f].capacity, getData[f].reservedSeats);
+}
+}
+for(let t=0; t<allFlightData.length; t++){
+    allFlightData[t].getAvailableSeats();
+    allFlightData[t].ticketsNumber();
+    allFlightData[t].renderRow();
+}
 
 
 
@@ -282,78 +272,6 @@ for(var t=0; t<allData.length; t++){
 
 
 
-
-// var allList = [];
-// if(localStorage.getItem('gift')){
-//     var getData = JSON.parse(localStorage.getItem('gift'));
-//     for(var m=0; m<getData.length; m++){
-//         new Gift(getData[m].wishList, getData[m].expectedYear);
-        
-//     }
-//     }
-// function Gift(wishList, expectedYear){
-//     this.wishList = wishList;
-//     this.expectedYear = expectedYear;
-//     this.minYears =10;
-//     this.maxYears = 100;
-//     this.randomYear = 0; 
-//     allList.push(this);
-// }
-// var formEl = document.getElementById('form');
-// formEl.addEventListener('submit', addInfo);
-// function addInfo(event){
-//     event.preventDefault();
-//     var wishList = event.target.wishList.value;
-//     var expectedYear = event.target.expextedYear.value;
-//     console.log(wishList,expectedYear);
-//     var wishGift = new Gift(wishList, expectedYear);
-    
-//     wishGift.getRandomYear();
-//     wishGift.render();
-//     localStorage.setItem('gift', JSON.stringify(allList));
-// }
-
-// var tabelEl = document.getElementById('table');
-// function showHeader(){
-//     var trEl1 = document.createElement('tr');
-//     tabelEl.appendChild(trEl1);
-//     var thEl = document.createElement('th');
-//     trEl1.appendChild(thEl);
-//     thEl.innerHTML = `Wish List`;
-//     var thEl2 = document.createElement('th');
-//     trEl1.appendChild(thEl2);
-//     thEl2.innerHTML = `expected Year`;
-//     var thEl3 = document.createElement('th');
-//     trEl1.appendChild(thEl3);
-//     thEl3.innerHTML = `Your Wish Will Be True On `;
-
-
-// }
-// showHeader();
-// Gift.prototype.render = function(){
-//     var trEl = document.createElement('tr');
-//     tabelEl.appendChild(trEl);
-//     var tdEl = document.createElement('td');
-//     trEl.appendChild(tdEl);
-//     tdEl.innerHTML = `${this.wishList}`;
-//     var tdEl1 = document.createElement('td');
-//     trEl.appendChild(tdEl1);
-//     tdEl1.innerHTML = `${this.expectedYear}`;
-//     var tdEl2 = document.createElement('td');
-//     trEl.appendChild(tdEl2);
-//     tdEl2.innerHTML = `${this.randomYear}`;
-
-// }
-// Gift.prototype.getRandomYear = function(){
-//     this.randomYear = Math.floor(getRandomArbitrary(this.minYears,this.maxYears));
-// }
-// for(var h=0; h<getData.length; h++){
-//     allList[h].getRandomYear();
-//     allList[h].render();
-// }
-// function getRandomArbitrary(min, max) {
-//     return Math.random() * (max - min) + min;
-//   }
 
 
 

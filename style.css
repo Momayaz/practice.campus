@@ -1,8 +1,14 @@
-  table, th, td{
+table, th, td{
     border: 2px solid black;
 } 
+ th{
+    background-color: rgba(6, 6, 185, 0.527);
+    padding: 2px;
+    border-color: white;
+   
+}
   
- 
+  
  
  
  
