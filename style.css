@@ -1,9 +1,13 @@
+<<<<<<< HEAD
   *{
       box-sizing: border-box;
   }
   
   
   th, td{
+=======
+table, th, td{
+>>>>>>> b549f63f04b095c6cbca909a3fea04510af0acbe
     border: 2px solid black;
     /* margin-left: 600px; */
     /* width: 600px; */
@@ -12,6 +16,7 @@
     
     
 } 
+<<<<<<< HEAD
 table{
     display: inline;
     float: right;
@@ -40,6 +45,18 @@ h1 {
      text-align: center;
      color: #f6af3d;
 }
+=======
+ th{
+    background-color: rgba(6, 6, 185, 0.527);
+    padding: 2px;
+    border-color: white;
+   
+}
+  
+  
+ 
+ 
+>>>>>>> b549f63f04b095c6cbca909a3fea04510af0acbe
  
 label {
     font-size: 24px;
