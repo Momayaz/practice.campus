@@ -55,6 +55,7 @@ for(var i = 0; i<data.length; i++){
         console.log(allFlights.availableSeats);
         allFlights.ticketsNumber();
         allFlights.renderRow();
+        getTotal();
         localStorage.setItem('flightData', JSON.stringify(allFlightData));
     }
 
@@ -146,7 +147,14 @@ for(let t=0; t<allFlightData.length; t++){
     allFlightData[t].renderRow();
 }
 
-
+function getTotal(){
+    let total = 0;
+    for(let k=0; k<allFlightData.length; k++){
+        total+= Number(allFlightData[k].capacity);
+    }
+    document.getElementById('paragraph').innerHTML = `Total Capacity=${total}`;
+}
+getTotal();
 
 
 
