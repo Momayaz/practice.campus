@@ -31,13 +31,13 @@ function click(event){
      var allFlights = new Flight(from,to,capacity,reserve);
      allFlights.getavailableSeats();
      allFlights.render();
+     getTotal();
      localStorage.setItem('flight', JSON.stringify(allData));
-    //  allFlights.total();
-    //  allFlights.showTotal();
+   
 
     
 }
-// total();
+
 //create table
 var tableEl = document.getElementById('table');
 var trEl = document.createElement('tr');
@@ -67,34 +67,27 @@ Flight.prototype.render = function(){
     trEl2.appendChild(tdEl4);
     tdEl4.innerHTML = `${this.availableSeats}`;
 }
+function getTotal(){
+    var total = 0;
+    for(let s=0; s<allData.length; s++){
+        total+= Number(allData[s].capacity);
+    }
+    document.getElementById('total').textContent = `Capacity of All Royal Flights:${total}`;
+}
+
+getTotal();
 if(localStorage.getItem('flight')){
 var flightData=JSON.parse(localStorage.getItem('flight'));
 for(var i=0; i<flightData.length; i++){
     new Flight(flightData[i].from, flightData[i].to, flightData[i].capacity, flightData[i].reserve);
 }
 }
-// function total(){
-//     var totalCapacity =0; 
-//     for(var i =0 ; i < allData.length ; i++)
-//     {
-//         totalCapacity+=Number(allData[i].capacity);
-//     }
-      
-// }
-// Flight.prototype.total = function(){
-//     for(var e=0; e<allData.length; e++){
-//         this.totalCapacity+= Number(this.capacity);
-//     }
-// }
-// Flight.prototype.showTotal = function(){
-// var totalEl = document.getElementById('total');
-// totalEl.textContent = `the total capacity is ${this.totalCapacity}`;
 
-// }
 
 for(var t=0; t<allData.length; t++){
     allData[t].getavailableSeats();
     allData[t].render();
+    getTotal();
 }
 
 

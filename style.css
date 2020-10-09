@@ -1,12 +1,69 @@
-  table, th, td{
-    border: 2px solid black;
-} 
+  *{
+      box-sizing: border-box;
+  }
   
+  
+  th, td{
+    border: 2px solid black;
+    /* margin-left: 600px; */
+    /* width: 600px; */
+    height: 10px;
+    margin-top: 30px;
+    
+    
+} 
+table{
+    display: inline;
+    float: right;
+    margin-right: 650px;
+    margin-top: 30px;
+    border: 1px solid black;
+
+}
+th {
+    padding: 5px;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.815);
+}
+td {
+    font-weight: bolder;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.507);
+}
+  body {
+     background-image: url('https://mk0runwaygirl0t0gjwt.kinstacdn.com/wp-content/uploads/2017/04/RJ-787-800x415.jpg'); 
+     background-repeat: no-repeat;
+     background-size: cover;
+  }
+h1 {
+     font-family: 'Sansita Swashed', cursive;
+     text-align: center;
+     color: #f6af3d;
+}
  
+label {
+    font-size: 24px;
+    font-weight: bolder;
+}
+input {
+    font-size: 15px;
+}
+form {
+    margin-left: 100px;
+}
  
- 
- 
- 
+p {
+    margin-left: 200px;
+    margin-top: 300px;
+    border: 2px solid black;
+    border-radius: 200px;
+    background-color: #fa0800ea;
+    font-size: 23px;
+    font-weight: bolder;
+    padding: 40px;
+    width: fit-content;
+    color: black;
+}
  
  
  
